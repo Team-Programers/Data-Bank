@@ -26,7 +26,7 @@ export default function Navbar() {
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <div className="w-4 h-4 bg-white rounded-sm rotate-45"></div>
             </div>
-            <span>MarketElite</span>
+            <span>DataBank</span>
           </Link>
           {/* Navigation Links */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">

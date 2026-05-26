@@ -6,10 +6,10 @@ import Marketplace from './pages/user/Marketplace';
 import ProductDetail from './pages/user/ProductDetail';
 import Login from './pages/user/Login';
 import Register from './pages/user/Register';
-
+import Categories from './pages/user/Categories';
 import SellProduct from './pages/user/SellProduct';
 
-const Categories = () => <div className="p-20 text-center text-2xl font-bold text-on-surface bg-background">Categories Page Coming Soon</div>;
+
 const HowItWorks = () => <div className="p-20 text-center text-2xl font-bold text-on-surface bg-background">How It Works Page Coming Soon</div>;
 
 function App() {

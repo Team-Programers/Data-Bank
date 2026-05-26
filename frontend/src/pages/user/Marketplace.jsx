@@ -186,7 +186,18 @@ export default function Marketplace() {
   };
 
   // Categories list
-  const categoriesList = ['Electronics', 'Home & Living', 'Fashion', 'Collectibles'];
+  const categoriesList = [
+  'Electronics',
+  'Fashion',
+  'Mobiles',
+  'Vehicles',
+  'Properties',
+  'Services',
+  'Jobs',
+  'Furniture',
+  'Pets',
+  'Home & Living'
+];
 
   // Handle Category check
   const handleCategoryChange = (cat) => {
