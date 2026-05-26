@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1d352e;
+  --color-on-primary: #ffffff;
+  --color-secondary: #a6c48a;
+  --color-on-secondary: #1d352e;
+  --color-background: #f8fbf9;
+  --color-surface: #ffffff;
+  --color-on-surface: #0e1814;
+  --color-on-surface-variant: #4b5a54;
+  --color-outline-variant: #d1dbd6;
+  --color-error: #ba1a1a;
+  --color-on-primary-fixed-variant: #2d4c42;
+  
+  --font-sans: 'Inter', sans-serif;
+}
+
+.card-shadow {
+  box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.06);
+}
