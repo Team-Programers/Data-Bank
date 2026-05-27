@@ -1,139 +1,161 @@
 
-<!-- BEGIN: MainHeader -->
-<header class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-<div class="flex items-center gap-12">
-<!-- Logo -->
-<a class="flex items-center gap-2 font-bold text-2xl tracking-tight" data-purpose="logo" href="#">
-<div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-<div class="w-4 h-4 bg-white rounded-sm rotate-45"></div>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-surface dark:bg-inverse-surface shadow-sm flex flex-col p-4 z-50">
+<div class="mb-10 px-2">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary leading-tight">MarketElite Pro</h1>
+<p class="font-label-xs text-label-xs text-on-surface-variant opacity-70">Admin Console</p>
 </div>
-<span>MarketElite</span>
+<nav class="flex-grow space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-semibold rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
 </a>
-<!-- Navigation -->
-<nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-<a class="hover:text-black transition-colors" href="#">What We Do</a>
-<a class="hover:text-black transition-colors" href="#">Services</a>
-<a class="hover:text-black transition-colors" href="#">Pricing</a>
-<a class="hover:text-black transition-colors" href="#">Resources</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:translate-x-1 hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="fact_check">fact_check</span>
+<span class="font-body-md text-body-md">Approve Listings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:translate-x-1 hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="category">category</span>
+<span class="font-body-md text-body-md">Categories</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:translate-x-1 hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-body-md text-body-md">Products</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:translate-x-1 hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-body-md text-body-md">View Users</span>
+</a>
 </nav>
+<div class="mt-auto pt-4 border-t border-outline-variant/10 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:translate-x-1 hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:translate-x-1 hover:bg-surface-container-high dark:hover:bg-surface-variant transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-body-md text-body-md">Logout</span>
+</a>
 </div>
-<!-- Header Actions -->
+</aside>
+<!-- Main Content Wrapper -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="sticky top-0 right-0 h-16 bg-surface/70 dark:bg-inverse-surface/70 glass-header flex justify-between items-center px-gutter w-full z-40">
+<div class="flex items-center bg-surface-container-low rounded-lg px-3 py-1.5 w-96 border border-outline-variant/10 focus-within:ring-2 focus-within:ring-primary focus-within:bg-white transition-all">
+<span class="material-symbols-outlined text-on-surface-variant mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-full placeholder:text-on-surface-variant/50" placeholder="Search orders, products, or users..." type="text">
+</div>
 <div class="flex items-center gap-4">
-<a class="text-sm font-semibold px-4 py-2" href="#">Log in</a>
-<a class="bg-slate-900 text-white text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-slate-800 transition-all" href="#">Get started</a>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant/20"></div>
+<button class="flex items-center gap-2 pl-2 pr-1 py-1 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Admin User</span>
+<span class="material-symbols-outlined text-primary" data-icon="account_circle" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</button>
 </div>
 </header>
-<!-- END: MainHeader -->
-<!-- BEGIN: HeroSection -->
-<main class="max-w-[1400px] mx-auto pb-20">
-<div class="hero-bg-container bg-white relative p-8 md:p-16 lg:p-20 min-h-[750px] flex flex-col lg:flex-row gap-12">
-<!-- Left Content Column -->
-<div class="lg:w-1/2 z-10 flex flex-col justify-center">
-<div class="inline-block bg-slate-100 text-slate-500 text-[10px] font-bold tracking-widest uppercase py-1 px-3 rounded mb-6">
-          #1 ECOMMERCE PLATFORM 2023
-        </div>
-<h1 class="heading-large text-5xl md:text-6xl lg:text-7xl mb-6">
-          Explore, shop,<br/>repeat again.
-        </h1>
-<p class="text-slate-500 text-lg max-w-md mb-10 leading-relaxed">
-          MarketElite is a driving force behind the dreams of emerging entrepreneurs, a trusted partner for industry leaders.
-        </p>
-<div class="flex items-center gap-4">
-<button class="bg-[#1D352E] text-white px-8 py-4 rounded-full font-semibold hover:bg-opacity-90 transition-all">
-            Start free trial
-          </button>
-</div>
-<!-- Floating Section Below Text (Simulating Reference) -->
-<div class="mt-20 flex gap-4">
-<!-- Mini Stats/Visuals Mockup -->
-<div class="w-24 h-24 bg-gray-100 rounded-2xl overflow-hidden grayscale">
-<img alt="Sample" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgjTS2w-RO-V0bQehm3__zTD4atIJwkY3sf78_Jb2viGlc2v7Xnmdh8Rq2pkEi5tJZ_pVFG1Yz0JYWhGYP66UwvHDUGkg5F-rUJgsZw5VVqjt-14GwOgX5qCWOqwLstT3ck7DQtxDMzhEITVaFwZneB-z-XRmqkDehLykaOCCfdmQKUajdxwcg2_-twDnqkjSTokggpeToI7trtx0NYeIrUT1ytpIpYVpD7GbehPVO7q-Mhms0EHl0LUEgjzPIrch5RYRQ6S85AGM"/>
-</div>
-<div class="flex-1 p-6 bg-[#F3F6F1] rounded-2xl relative overflow-hidden">
-<div class="relative z-10">
-<span class="text-3xl font-bold">$243.89</span>
-<p class="text-xs text-slate-500 mt-1 uppercase tracking-wider">Total Sales Today</p>
-</div>
-<!-- Small growth graph representation -->
-<div class="absolute bottom-0 right-0 w-24 h-12 opacity-20">
-<svg class="w-full h-full" viewbox="0 0 100 40"><path class="text-green-600" d="M0 40 Q 25 35, 50 15 T 100 0" fill="transparent" stroke="currentColor" stroke-width="4"></path></svg>
-</div>
-</div>
-</div>
-</div>
-<!-- Right Visual Column (Floating Elements) -->
-<div class="lg:w-1/2 relative min-h-[500px]">
-<!-- Large Main Image Card (Premium Goods) -->
-<div class="absolute top-0 right-0 w-full md:w-[85%] aspect-[4/5] bg-[#F1F3EE] rounded-3xl overflow-hidden card-shadow">
-<img alt="Premium Luxury Goods" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0uiWjqNm9AUCCGGn23jfKWjbmVPYHDGjEiqAyRyJ6ATexQeqXWHByF_TWoV70OjOEeuEJi9bS6hRfejwwr3LI0NCP5W19vPyMYfquOFiYT8VMnLPtpQNKk0tNgTLZaXUgF_VYb5CWvAaYnv3uGZMwNndCKYI1jYDKOs2diNX5wrhz6-K94nK_bq8u6BL8Wg5nCaJrgvFmT_U3EcaPmlSoTIeSkuEUg22sIyuCjkXqXmNhY7p3ctm1cza1Ls"/>
-<!-- Product Tag overlay -->
-<div class="absolute bottom-8 left-8 bg-white p-5 rounded-2xl card-shadow w-64" data-purpose="product-card">
-<div class="flex justify-between items-start mb-2">
+<!-- Page Canvas -->
+<div class="p-gutter flex flex-col max-w-[1280px] gap-10 flex-grow">
+<!-- Dashboard Header -->
+<div class="flex justify-between items-end">
 <div>
-<h3 class="font-bold text-sm">Classic Essentials Set</h3>
-<p class="text-xs text-slate-400">$845.00</p>
+<h2 class="font-display-lg text-display-lg text-primary">Overview</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Welcome back, here's what's happening today.</p>
 </div>
-<span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
-<span class="w-1 h-1 bg-green-700 rounded-full"></span> PRO
-              </span>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-label-sm text-label-sm flex items-center gap-2 hover:-translate-y-0.5 transition-transform card-elevation">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+                    Export Report
+                </button>
+</div>
+<!-- Summary Cards (Bento-lite) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Total Sales -->
+<div class="bg-white p-6 rounded-xl border border-outline-variant/10 card-elevation group transition-all hover:-translate-y-1">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+<span class="text-success font-label-xs text-label-xs bg-success/10 px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="trending_up">trending_up</span>
+                            +12.5%
+                        </span>
+</div>
+<p class="text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">Total Sales</p>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1">$142,384.00</h3>
+</div>
+<!-- Active Listings -->
+<div class="bg-white p-6 rounded-xl border border-outline-variant/10 card-elevation transition-all hover:-translate-y-1">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="inventory">inventory</span>
+</div>
+<span class="text-on-surface-variant font-label-xs text-label-xs bg-surface-variant px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="remove">remove</span>
+                            0%
+                        </span>
+</div>
+<p class="text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">Active Listings</p>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1">1,204</h3>
+</div>
+<!-- New Users -->
+<div class="bg-white p-6 rounded-xl border border-outline-variant/10 card-elevation transition-all hover:-translate-y-1">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+</div>
+<span class="text-success font-label-xs text-label-xs bg-success/10 px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="trending_up">trending_up</span>
+                            +8.2%
+                        </span>
+</div>
+<p class="text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">New Users</p>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1">482</h3>
 </div>
 </div>
+<!-- Middle Section: Chart & Recent Activities -->
+<div class="grid grid-cols-1 gap-6">
+<!-- Sales Performance Chart -->
+<div class="lg:col-span-full bg-white p-8 rounded-xl border border-outline-variant/10 card-elevation flex flex-col gap-6 min-h-[600px]"><div class="flex justify-between items-center"><h4 class="font-headline-md text-headline-md text-on-surface">Sales Performance</h4><select class="bg-surface-container-low border-none rounded-lg text-label-sm font-label-sm px-4 py-2 focus:ring-1 focus:ring-primary"><option>Last 7 Days</option><option>Last 30 Days</option></select></div><div class="relative w-full mt-4 flex items-end justify-between gap-2 px-2 flex-grow"><div class="absolute inset-0 flex flex-col justify-between pointer-events-none"><div class="border-b border-outline-variant/10 w-full h-0"></div><div class="border-b border-outline-variant/10 w-full h-0"></div><div class="border-b border-outline-variant/10 w-full h-0"></div><div class="border-b border-outline-variant/10 w-full h-0"></div></div><div class="group relative w-full h-[60%] bg-primary/10 rounded-t-lg transition-all hover:bg-primary/30"><div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">Mon: $12k</div></div><div class="group relative w-full h-[45%] bg-primary/10 rounded-t-lg transition-all hover:bg-primary/30"></div><div class="group relative w-full h-[85%] bg-primary rounded-t-lg transition-all hover:bg-primary/80"><div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">Wed: $28k</div></div><div class="group relative w-full h-[55%] bg-primary/10 rounded-t-lg transition-all hover:bg-primary/30"></div><div class="group relative w-full h-[70%] bg-primary/10 rounded-t-lg transition-all hover:bg-primary/30"></div><div class="group relative w-full h-[40%] bg-primary/10 rounded-t-lg transition-all hover:bg-primary/30"></div><div class="group relative w-full h-[95%] bg-primary rounded-t-lg transition-all hover:bg-primary/80"><div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">Sun: $32k</div></div></div><div class="flex justify-between px-2 text-label-xs font-label-xs text-on-surface-variant opacity-50"><span class="">MON</span><span class="">TUE</span><span class="">WED</span><span class="">THU</span><span class="">FRI</span><span class="">SAT</span><span class="">SUN</span></div></div>
+<!-- Recent Listings -->
+
 </div>
-<!-- Floating Stats Card (50x) -->
-<div class="absolute -bottom-6 -left-4 md:left-0 bg-[#A6C48A] p-6 rounded-3xl text-[#1D352E] card-shadow z-20 w-48" data-purpose="stats-card">
-<div class="text-4xl font-bold mb-1">50x</div>
-<p class="text-xs font-medium leading-tight">New customer every week</p>
-<div class="mt-4 flex -space-x-2">
-<div class="w-6 h-6 rounded-full border-2 border-[#A6C48A] bg-slate-300"></div>
-<div class="w-6 h-6 rounded-full border-2 border-[#A6C48A] bg-slate-400"></div>
-<div class="w-6 h-6 rounded-full border-2 border-[#A6C48A] bg-slate-500"></div>
-<div class="w-6 h-6 rounded-full border-2 border-[#A6C48A] bg-slate-600 flex items-center justify-center text-[8px] text-white">+</div>
+<!-- Data Table Section -->
 </div>
+<!-- Footer Context -->
+<footer class="mt-auto px-gutter py-8 border-t border-outline-variant/10 text-on-surface-variant/50 font-label-xs text-label-xs flex justify-between items-center">
+<p class="">© 2023 MarketElite Pro Systems. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">System Health</a>
+<a class="hover:text-primary transition-colors" href="#">Support</a>
 </div>
-<!-- Floating Sidebar Interface (Simplified) -->
-<div class="hidden md:block absolute top-20 -right-8 bg-white p-4 rounded-2xl card-shadow w-40 z-20" data-purpose="ui-sidebar">
-<div class="space-y-4">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-xs">⌚</div>
-<div>
-<div class="h-1.5 w-12 bg-slate-200 rounded"></div>
-<div class="h-1.5 w-8 bg-slate-100 rounded mt-1"></div>
-</div>
-</div>
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-xs">📷</div>
-<div>
-<div class="h-1.5 w-12 bg-slate-200 rounded"></div>
-<div class="h-1.5 w-8 bg-slate-100 rounded mt-1"></div>
-</div>
-</div>
-<div class="flex items-center gap-3 border-t pt-4">
-<div class="h-1.5 w-full bg-slate-100 rounded"></div>
-</div>
-</div>
-</div>
-<!-- Small Partner Pill Overlay -->
-<div class="absolute bottom-[20%] right-[-5%] bg-white/90 backdrop-blur-md px-4 py-3 rounded-full flex items-center gap-3 card-shadow z-20 border border-white/50">
-<div class="flex -space-x-1">
-<div class="w-5 h-5 rounded-full bg-red-400 flex items-center justify-center text-[8px] text-white">a</div>
-<div class="w-5 h-5 rounded-full bg-yellow-400 flex items-center justify-center text-[8px] text-white">b</div>
-<div class="w-5 h-5 rounded-full bg-green-400 flex items-center justify-center text-[8px] text-white">a</div>
-</div>
-<span class="text-[10px] font-semibold text-slate-600">Partnering with many e-commerce</span>
-</div>
-</div>
-</div>
+</footer>
 </main>
-<!-- END: HeroSection -->
-<!-- BEGIN: BottomSocialNotice -->
-<div class="max-w-7xl mx-auto px-10 flex justify-center items-center gap-6 opacity-30 grayscale saturate-0">
-<div class="text-xs font-bold uppercase tracking-widest text-slate-400">Trusted By</div>
-<div class="h-4 w-px bg-slate-300"></div>
-<div class="flex gap-8 items-center">
-<span class="font-black text-xl">Dribbble</span>
-<span class="font-black text-xl">Behance</span>
-<span class="font-black text-xl">Instagram</span>
-<span class="font-black text-xl">Shopify</span>
-</div>
-</div>
-<!-- END: BottomSocialNotice -->
+<script>
+        // Micro-interaction for hover states and transitions
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                if(!link.classList.contains('bg-primary-container')) {
+                    link.style.transform = 'translateX(4px)';
+                }
+            });
+            link.addEventListener('mouseleave', () => {
+                link.style.transform = 'translateX(0px)';
+            });
+        });
+
+        // Search bar focus effect
+        const searchInput = document.querySelector('input[type="text"]');
+        const searchContainer = searchInput.parentElement;
+        searchInput.addEventListener('focus', () => {
+            searchContainer.classList.add('shadow-md');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchContainer.classList.remove('shadow-md');
+        });
+    </script>
+
+

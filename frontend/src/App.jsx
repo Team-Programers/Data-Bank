@@ -8,7 +8,11 @@ import Login from './pages/user/Login';
 import Register from './pages/user/Register';
 import Categories from './pages/user/Categories';
 import SellProduct from './pages/user/SellProduct';
-
+import Dashboard from './pages/admin/Dashboard';
+import ApproveListings from './pages/admin/ApproveListings';
+import ManageCategories from './pages/admin/ManageCategories';
+import ManageProducts from './pages/admin/ManageProducts';
+import ManageUsers from './pages/admin/ManageUsers';
 
 const HowItWorks = () => <div className="p-20 text-center text-2xl font-bold text-on-surface bg-background">How It Works Page Coming Soon</div>;
 
@@ -23,6 +27,12 @@ function App() {
       <Route path="/sell-product" element={<UserLayout><SellProduct /></UserLayout>} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/admin" element={<Dashboard />} />
+      <Route path="/admin/dashboard" element={<Dashboard />} />
+      <Route path="/admin/approve-listings" element={<ApproveListings />} />
+      <Route path="/admin/categories" element={<ManageCategories />} />
+      <Route path="/admin/products" element={<ManageProducts />} />
+      <Route path="/admin/users" element={<ManageUsers />} />
       <Route path="*" element={<UserLayout><Home /></UserLayout>} />
     </Routes>
   );
