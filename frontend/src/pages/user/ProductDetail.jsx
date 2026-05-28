@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 export default function ProductDetail() {
   // Images from the design spec
@@ -11,12 +11,22 @@ export default function ProductDetail() {
 
   // States
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [selectedConfig, setSelectedConfig] = useState('16 Cores');
-  const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState('Description');
   const [wishlist, setWishlist] = useState(false);
+  const scrollRef = useRef(null);
 
+  const selectedConfig = '16 Cores';
   const configs = ['16 Cores', '24 Cores', '32 Cores'];
+
+  const handleScroll = (direction) => {
+    if (scrollRef.current) {
+      const { scrollLeft, clientWidth } = scrollRef.current;
+      const scrollAmount = clientWidth * 0.75;
+      scrollRef.current.scrollTo({
+        left: direction === 'left' ? scrollLeft - scrollAmount : scrollLeft + scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   // Details
   const product = {
@@ -155,18 +165,8 @@ export default function ProductDetail() {
                 </button>
               </div>
 
-              {/* Star Rating (Flipkart Style) */}
-              <div className="flex flex-wrap items-center gap-2 mt-2">
-                <div className="bg-[#388e3c] text-white text-[11px] font-bold px-2 py-0.5 rounded flex items-center gap-0.5">
-                  <span>{product.rating}</span>
-                  <svg className="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24">
-                    <path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.787 1.4 8.168L12 18.896l-7.334 3.868 1.4-8.168L.132 9.21l8.2-1.192L12 .587z" />
-                  </svg>
-                </div>
-                <span className="text-xs font-bold text-on-surface-variant">
-                  {product.reviews} Reviews
-                </span>
-                <span className="w-1 h-1 rounded-full bg-outline-variant/80"></span>
+              {/* SKU Section */}
+              <div className="flex items-center gap-2 mt-2">
                 <span className="text-xs font-bold text-on-surface-variant/80 uppercase">
                   SKU: {product.sku}
                 </span>
@@ -196,71 +196,41 @@ export default function ProductDetail() {
               </p>
             </div>
 
-            {/* Configurations & Quantity Selection Card */}
-            <div className="bg-white rounded-2xl p-5 border border-outline-variant/30 space-y-5">
-              <div>
-                <h3 className="text-xs uppercase tracking-wider font-extrabold text-on-surface mb-2.5">
-                  Select Configuration
-                </h3>
-                <div className="flex flex-wrap gap-2.5">
-                  {configs.map((config) => (
-                    <button
-                      key={config}
-                      onClick={() => setSelectedConfig(config)}
-                      className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
-                        selectedConfig === config
-                          ? 'border-2 border-primary bg-primary/5 text-primary'
-                          : 'border border-outline-variant/30 bg-white text-on-surface-variant hover:border-primary/50'
-                      }`}
-                    >
-                      {config}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Quantity counter */}
-              <div className="flex items-center justify-between pt-1">
-                <span className="text-xs uppercase tracking-wider font-extrabold text-on-surface">Quantity</span>
-                <div className="flex items-center border border-outline-variant/35 rounded-xl bg-surface-container overflow-hidden w-28 h-9 shadow-sm">
-                  <button 
-                    disabled={quantity <= 1}
-                    onClick={() => setQuantity(quantity - 1)}
-                    className="flex-1 h-full flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors cursor-pointer disabled:opacity-40"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15" />
-                    </svg>
-                  </button>
-                  <span className="w-8 text-center text-xs font-bold text-on-surface select-none">
-                    {quantity}
-                  </span>
-                  <button 
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="flex-1 h-full flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors cursor-pointer"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                  </button>
-                </div>
+            {/* Description Paragraphs */}
+            <div className="bg-white rounded-2xl p-5 border border-outline-variant/30 space-y-3">
+              <h3 className="text-xs uppercase tracking-wider font-extrabold text-on-surface">
+                Product Description
+              </h3>
+              <div className="text-xs sm:text-sm text-on-surface-variant font-semibold leading-relaxed space-y-3">
+                <p>
+                  Experience unparalleled processing power with the Quantum Core Processor X9. Designed for elite workstations and high-end gaming rigs, this next-generation silicon architecture delivers massive multi-threading capabilities and blazing-fast clock speeds.
+                </p>
+                <p>
+                  Built on a revolutionary 3nm process, it ensures optimal power efficiency while pushing the boundaries of compute performance. Whether you are rendering complex 3D scenes, compiling large codebases, or running intensive simulations, the X9 handles it all with seamless grace.
+                </p>
               </div>
             </div>
 
             {/* Desktop Actions Block (hidden on mobile) */}
-            <div className="hidden sm:flex flex-col gap-3 pt-2">
-              <button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-sm py-3.5 rounded-xl transition-all shadow-[0_4px_12px_rgba(16,185,129,0.2)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer flex items-center justify-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+            <div className="hidden sm:flex gap-3 pt-2">
+              <a 
+                href="tel:+1234567890"
+                className="flex-1 bg-primary hover:bg-primary/95 text-white font-extrabold text-xs py-2.5 rounded-xl transition-all shadow-[0_4px_12px_rgba(29,53,46,0.15)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer flex items-center justify-center gap-2"
+              >
+                <span className="material-symbols-outlined text-base">call</span>
+                Call Seller
+              </a>
+              <a 
+                href="https://wa.me/1234567890?text=Hi%2C%20I'm%20interested%20in%20the%20Quantum%20Core%20Processor%20X9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 bg-[#25D366] hover:bg-[#20ba56] text-white font-extrabold text-xs py-2.5 rounded-xl transition-all shadow-[0_4px_12px_rgba(37,211,102,0.15)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer flex items-center justify-center gap-2"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.717-1.454L0 24zm6.59-4.846c1.6.95 3.18 1.449 4.825 1.451 5.436 0 9.859-4.385 9.862-9.77.001-2.61-1.013-5.064-2.855-6.908C16.638 2.083 14.19 1.07 11.58 1.07 6.142 1.07 1.72 5.454 1.718 10.84c-.001 1.74.466 3.433 1.354 4.9l-.997 3.642 3.734-.98c1.468.8 3.061 1.22 4.675 1.223zm10.74-7.516c-.294-.148-1.743-.86-2.012-.958-.268-.099-.463-.148-.659.148-.196.295-.758.958-.93 1.156-.17.197-.343.22-.638.073-.294-.148-1.243-.46-2.37-1.465-.877-.783-1.47-1.75-1.642-2.046-.172-.295-.018-.455.129-.602.132-.133.294-.344.44-.516.148-.172.197-.295.295-.492.099-.197.05-.369-.025-.516-.073-.148-.659-1.591-.902-2.176-.237-.57-.478-.492-.659-.502-.17-.008-.367-.01-.565-.01-.197 0-.519.074-.79.37-.272.295-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.743-.711 1.989-1.4.245-.688.245-1.277.172-1.4-.074-.122-.268-.196-.562-.344z"/>
                 </svg>
-                Buy Now
-              </button>
-              <button className="w-full bg-white hover:bg-slate-50 border border-primary text-primary font-extrabold text-sm py-3.5 rounded-xl transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer flex items-center justify-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                </svg>
-                Add to Cart
-              </button>
+                WhatsApp Seller
+              </a>
             </div>
           </div>
 
@@ -281,146 +251,32 @@ export default function ProductDetail() {
 
       </div>
 
-      {/* Tabs description specifications and reviews */}
+      {/* Specifications Section */}
       <div className="mb-16">
-        <div className="border-b border-outline-variant/30 flex gap-6 overflow-x-auto whitespace-nowrap scrollbar-none mb-6">
-          {['Description', 'Specifications', 'Reviews (124)'].map((tab) => {
-            const cleanTab = tab.split(' ')[0];
-            const isActive = activeTab === cleanTab;
-            return (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(cleanTab)}
-                className={`font-bold text-base pb-3.5 border-b-2 transition-all cursor-pointer ${
-                  isActive 
-                    ? 'text-primary border-primary' 
-                    : 'text-on-surface-variant/70 border-transparent hover:text-primary'
-                }`}
-              >
-                {tab}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Tab contents block */}
+        <h2 className="text-xl sm:text-2xl font-black text-on-surface mb-6">Specifications</h2>
         <div className="bg-white rounded-2xl p-6 border border-outline-variant/30 shadow-sm">
-          {activeTab === 'Description' && (
-            <div className="prose max-w-none text-sm sm:text-base text-on-surface-variant leading-relaxed font-semibold">
-              <p className="mb-4">
-                Experience unparalleled processing power with the Quantum Core Processor X9. Designed for elite workstations and high-end gaming rigs, this next-generation silicon architecture delivers massive multi-threading capabilities and blazing-fast clock speeds.
-              </p>
-              <p className="mb-8">
-                Built on a revolutionary 3nm process, it ensures optimal power efficiency while pushing the boundaries of compute performance. Whether you are rendering complex 3D scenes, compiling large codebases, or running intensive simulations, the X9 handles it all with seamless grace.
-              </p>
-              
-              {/* Feature Highlights Bento Layout */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
-                <div className="bg-surface-container/30 rounded-xl p-5 border border-outline-variant/20 hover:-translate-y-0.5 transition-transform flex items-start gap-4">
-                  <div className="p-2.5 bg-primary/10 text-primary rounded-lg shrink-0">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h5 className="font-extrabold text-sm text-on-surface mb-0.5">5.8 GHz Boost</h5>
-                    <p className="text-xs font-semibold text-on-surface-variant/80">Industry-leading single-core speed.</p>
-                  </div>
-                </div>
-
-                <div className="bg-surface-container/30 rounded-xl p-5 border border-outline-variant/20 hover:-translate-y-0.5 transition-transform flex items-start gap-4">
-                  <div className="p-2.5 bg-primary/10 text-primary rounded-lg shrink-0">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h5 className="font-extrabold text-sm text-on-surface mb-0.5">32 Threads</h5>
-                    <p className="text-xs font-semibold text-on-surface-variant/80">Massive multitasking capacity.</p>
-                  </div>
-                </div>
-
-                <div className="bg-surface-container/30 rounded-xl p-5 border border-outline-variant/20 hover:-translate-y-0.5 transition-transform flex items-start gap-4">
-                  <div className="p-2.5 bg-primary/10 text-primary rounded-lg shrink-0">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1.5m0 15V21m-9-9h1.5m15 0H21m-3-6.364l-1.06 1.06m-9.192 9.193l-1.06 1.06m0-11.314l1.06 1.06m9.193 9.193l1.06 1.06M12 7a5 5 0 100 10 5 5 0 000-10z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h5 className="font-extrabold text-sm text-on-surface mb-0.5">Thermal Velocity</h5>
-                    <p className="text-xs font-semibold text-on-surface-variant/80">Advanced smart cooling thresholds.</p>
-                  </div>
-                </div>
-              </div>
+          <div className="text-sm font-semibold text-on-surface-variant divide-y divide-outline-variant/20">
+            <div className="grid grid-cols-3 py-3">
+              <span className="font-extrabold text-on-surface">Process Size</span>
+              <span className="col-span-2">3nm silicon process</span>
             </div>
-          )}
-
-          {activeTab === 'Specifications' && (
-            <div className="text-sm font-semibold text-on-surface-variant divide-y divide-outline-variant/20">
-              <div className="grid grid-cols-3 py-3">
-                <span className="font-extrabold text-on-surface">Process Size</span>
-                <span className="col-span-2">3nm silicon process</span>
-              </div>
-              <div className="grid grid-cols-3 py-3">
-                <span className="font-extrabold text-on-surface">Cores / Threads</span>
-                <span className="col-span-2">{selectedConfig.split(' ')[0]} Cores / 32 Threads</span>
-              </div>
-              <div className="grid grid-cols-3 py-3">
-                <span className="font-extrabold text-on-surface">Base Frequency</span>
-                <span className="col-span-2">4.2 GHz</span>
-              </div>
-              <div className="grid grid-cols-3 py-3">
-                <span className="font-extrabold text-on-surface">Max Boost</span>
-                <span className="col-span-2">5.8 GHz boost</span>
-              </div>
-              <div className="grid grid-cols-3 py-3">
-                <span className="font-extrabold text-on-surface">L3 Cache</span>
-                <span className="col-span-2">128 MB</span>
-              </div>
+            <div className="grid grid-cols-3 py-3">
+              <span className="font-extrabold text-on-surface">Cores / Threads</span>
+              <span className="col-span-2">{selectedConfig.split(' ')[0]} Cores / 32 Threads</span>
             </div>
-          )}
-
-          {activeTab === 'Reviews' && (
-            <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="text-3xl font-black text-on-surface">4.8</div>
-                <div>
-                  <div className="flex items-center text-amber-500 gap-0.5">
-                    {[1, 2, 3, 4].map(n => (
-                      <svg key={n} className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                        <path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.787 1.4 8.168L12 18.896l-7.334 3.868 1.4-8.168L.132 9.21l8.2-1.192L12 .587z" />
-                      </svg>
-                    ))}
-                    <svg className="w-4 h-4 fill-current opacity-50" viewBox="0 0 24 24">
-                      <path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.787 1.4 8.168L12 18.896l-7.334 3.868 1.4-8.168L.132 9.21l8.2-1.192L12 .587z" />
-                    </svg>
-                  </div>
-                  <p className="text-xs font-semibold text-on-surface-variant/80 mt-0.5">Based on 124 reviews</p>
-                </div>
-              </div>
-              
-              <div className="divide-y divide-outline-variant/15">
-                <div className="py-4 space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-extrabold text-on-surface">Alex M.</span>
-                    <span className="text-[10px] bg-[#388e3c] text-white px-1 py-0.2 rounded font-bold">5.0 ★</span>
-                  </div>
-                  <p className="text-sm font-semibold text-on-surface-variant leading-relaxed">
-                    This processor is a monster. Compilation times on my heavy backend apps cut in half. Highly recommended if you compile a lot!
-                  </p>
-                </div>
-                <div className="py-4 space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-extrabold text-on-surface">Sarah K.</span>
-                    <span className="text-[10px] bg-[#388e3c] text-white px-1 py-0.2 rounded font-bold">4.8 ★</span>
-                  </div>
-                  <p className="text-sm font-semibold text-on-surface-variant leading-relaxed">
-                    Runs cool with my AIO cooler. Boost speeds hit 5.8 GHz consistently. Very premium build and packaging.
-                  </p>
-                </div>
-              </div>
+            <div className="grid grid-cols-3 py-3">
+              <span className="font-extrabold text-on-surface">Base Frequency</span>
+              <span className="col-span-2">4.2 GHz</span>
             </div>
-          )}
+            <div className="grid grid-cols-3 py-3">
+              <span className="font-extrabold text-on-surface">Max Boost</span>
+              <span className="col-span-2">5.8 GHz boost</span>
+            </div>
+            <div className="grid grid-cols-3 py-3">
+              <span className="font-extrabold text-on-surface">L3 Cache</span>
+              <span className="col-span-2">128 MB</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -429,12 +285,18 @@ export default function ProductDetail() {
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl sm:text-2xl font-black text-on-surface">Related Products</h2>
           <div className="flex gap-2">
-            <button className="w-9 h-9 rounded-full border border-outline-variant/35 flex items-center justify-center text-on-surface-variant hover:bg-slate-50 cursor-pointer active:scale-95 transition-all">
+            <button 
+              onClick={() => handleScroll('left')}
+              className="w-9 h-9 rounded-full border border-outline-variant/35 flex items-center justify-center text-on-surface-variant hover:bg-slate-50 cursor-pointer active:scale-95 transition-all"
+            >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
               </svg>
             </button>
-            <button className="w-9 h-9 rounded-full border border-outline-variant/35 flex items-center justify-center text-on-surface-variant hover:bg-slate-50 cursor-pointer active:scale-95 transition-all">
+            <button 
+              onClick={() => handleScroll('right')}
+              className="w-9 h-9 rounded-full border border-outline-variant/35 flex items-center justify-center text-on-surface-variant hover:bg-slate-50 cursor-pointer active:scale-95 transition-all"
+            >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
@@ -442,17 +304,20 @@ export default function ProductDetail() {
           </div>
         </div>
 
-        {/* Carousel Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {/* Carousel Row (Horizontal scrollable) */}
+        <div 
+          ref={scrollRef}
+          className="flex gap-6 overflow-x-auto pb-4 scrollbar-none snap-x snap-mandatory scroll-smooth"
+        >
           {relatedProducts.map((p) => (
             <a 
               key={p.id}
               href="#"
-              className="bg-white rounded-2xl overflow-hidden border border-outline-variant/20 hover:border-primary/40 group block transition-all hover:-translate-y-1 shadow-sm hover:shadow-md"
+              className="bg-white rounded-2xl overflow-hidden border border-outline-variant/20 hover:border-primary/40 group block transition-all hover:-translate-y-1 shadow-sm hover:shadow-md flex-shrink-0 w-[180px] sm:w-[220px] snap-start"
             >
-              <div className="aspect-[4/3] bg-surface-container/30 overflow-hidden relative p-4 flex items-center justify-center">
+              <div className="aspect-[16/10] bg-surface-container/30 overflow-hidden relative p-2.5 flex items-center justify-center">
                 {p.tag && (
-                  <span className="absolute top-3 left-3 bg-red-100 text-red-800 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded shadow-sm">
+                  <span className="absolute top-2 left-2 bg-red-100 text-red-800 text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded shadow-sm">
                     {p.tag}
                   </span>
                 )}
@@ -462,7 +327,7 @@ export default function ProductDetail() {
                   src={p.image} 
                 />
               </div>
-              <div className="p-5 space-y-1.5">
+              <div className="p-3 space-y-1">
                 <span className="text-[10px] uppercase font-bold text-primary tracking-wider">{p.category}</span>
                 <h3 className="font-extrabold text-sm text-on-surface line-clamp-2 leading-tight group-hover:text-primary transition-colors">
                   {p.title}
@@ -478,7 +343,7 @@ export default function ProductDetail() {
                   </div>
                   <span className="p-1.5 bg-primary/10 text-primary rounded-lg group-hover:bg-primary group-hover:text-white transition-colors">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                     </svg>
                   </span>
                 </div>
@@ -488,20 +353,26 @@ export default function ProductDetail() {
         </div>
       </div>
 
-      {/* Mobile Sticky Footer Actions Drawer (Flipkart Style) */}
+      {/* Mobile Sticky Footer Actions Drawer */}
       <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-outline-variant/20 flex p-3 gap-3 sm:hidden shadow-[0_-4px_12px_rgba(0,0,0,0.06)]">
-        <button className="flex-1 bg-white hover:bg-slate-50 border border-primary text-primary font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2 cursor-pointer active:bg-slate-100 transition-colors">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+        <a 
+          href="tel:+1234567890"
+          className="flex-1 bg-white hover:bg-slate-50 border border-primary text-primary font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 cursor-pointer active:bg-slate-100 transition-colors text-center"
+        >
+          <span className="material-symbols-outlined text-base">call</span>
+          Call Seller
+        </a>
+        <a 
+          href="https://wa.me/1234567890?text=Hi%2C%20I'm%20interested%20in%20the%20Quantum%20Core%20Processor%20X9"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-1 bg-[#25D366] hover:bg-[#20ba56] text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition-all shadow-[0_4px_12px_rgba(37,211,102,0.25)] text-center"
+        >
+          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.717-1.454L0 24zm6.59-4.846c1.6.95 3.18 1.449 4.825 1.451 5.436 0 9.859-4.385 9.862-9.77.001-2.61-1.013-5.064-2.855-6.908C16.638 2.083 14.19 1.07 11.58 1.07 6.142 1.07 1.72 5.454 1.718 10.84c-.001 1.74.466 3.433 1.354 4.9l-.997 3.642 3.734-.98c1.468.8 3.061 1.22 4.675 1.223zm10.74-7.516c-.294-.148-1.743-.86-2.012-.958-.268-.099-.463-.148-.659.148-.196.295-.758.958-.93 1.156-.17.197-.343.22-.638.073-.294-.148-1.243-.46-2.37-1.465-.877-.783-1.47-1.75-1.642-2.046-.172-.295-.018-.455.129-.602.132-.133.294-.344.44-.516.148-.172.197-.295.295-.492.099-.197.05-.369-.025-.516-.073-.148-.659-1.591-.902-2.176-.237-.57-.478-.492-.659-.502-.17-.008-.367-.01-.565-.01-.197 0-.519.074-.79.37-.272.295-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.743-.711 1.989-1.4.245-.688.245-1.277.172-1.4-.074-.122-.268-.196-.562-.344z"/>
           </svg>
-          Add to Cart
-        </button>
-        <button className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition-all shadow-[0_4px_12px_rgba(16,185,129,0.25)]">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-          </svg>
-          Buy Now
-        </button>
+          WhatsApp Seller
+        </a>
       </div>
 
     </main>
