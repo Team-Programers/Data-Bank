@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import ScrollToTop from './components/ScrollToTop';
 import UserLayout from './layouts/UserLayout';
 import Home from './pages/user/Home';
 import Marketplace from './pages/user/Marketplace';
@@ -18,8 +19,10 @@ const HowItWorks = () => <div className="p-20 text-center text-2xl font-bold tex
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<UserLayout><Home /></UserLayout>} />
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<UserLayout><Home /></UserLayout>} />
       <Route path="/marketplace" element={<UserLayout><Marketplace /></UserLayout>} />
       <Route path="/product/:id" element={<UserLayout><ProductDetail /></UserLayout>} />
       <Route path="/categories" element={<UserLayout><Categories /></UserLayout>} />
@@ -34,7 +37,8 @@ function App() {
       <Route path="/admin/products" element={<ManageProducts />} />
       <Route path="/admin/users" element={<ManageUsers />} />
       <Route path="*" element={<UserLayout><Home /></UserLayout>} />
-    </Routes>
+      </Routes>
+    </>
   );
 }
 
