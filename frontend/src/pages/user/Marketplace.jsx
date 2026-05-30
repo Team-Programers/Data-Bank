@@ -169,12 +169,30 @@ export default function Marketplace() {
   );
   const [priceMin, setPriceMin] = useState(0);
   const [priceMax, setPriceMax] = useState(2500);
-  const [location, setLocation] = useState('All Locations');
+  const [selectedLocation, setSelectedLocation] = useState('All Locations');
+  const [locationDropdownOpen, setLocationDropdownOpen] = useState(false);
+  const [locationSearchQuery, setLocationSearchQuery] = useState('');
   const [condition, setCondition] = useState('All');
   const [sortBy, setSortBy] = useState('Newest Arrivals');
   const [wishlist, setWishlist] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+
+  const locations = [
+    'Kerala',
+    'Tamil Nadu',
+    'Punjab',
+    'Maharashtra',
+    'Delhi',
+    'Karnataka',
+    'Gujarat',
+    'Uttar Pradesh'
+  ];
+
+  const handleUseCurrentLocation = () => {
+    setSelectedLocation('Mumbai, MH');
+    setLocationDropdownOpen(false);
+  };
 
   // Handle wishlisting
   const toggleWishlist = (id) => {
@@ -214,7 +232,7 @@ export default function Marketplace() {
     setSelectedCategories([]);
     setPriceMin(0);
     setPriceMax(2500);
-    setLocation('All Locations');
+    setSelectedLocation('All Locations');
     setCondition('All');
     setSearchQuery('');
   };
@@ -250,13 +268,19 @@ export default function Marketplace() {
     result = result.filter(p => p.price >= priceMin && p.price <= priceMax);
 
     // Location
-    if (location !== 'All Locations') {
-      if (location === 'North America') {
+    if (selectedLocation && selectedLocation !== 'All Locations' && selectedLocation !== 'India') {
+      if (selectedLocation === 'North America') {
         result = result.filter(p => ['New York, NY', 'Austin, TX', 'Seattle, WA', 'San Francisco, CA', 'Miami, FL', 'Portland, OR', 'Chicago, IL'].includes(p.location));
-      } else if (location === 'Europe') {
+      } else if (selectedLocation === 'Europe') {
         result = result.filter(p => ['London, UK'].includes(p.location));
-      } else if (location === 'Asia') {
+      } else if (selectedLocation === 'Asia') {
         result = result.filter(p => p.location.includes('Tokyo') || p.location.includes('UAE'));
+      } else {
+        const selLocLower = selectedLocation.toLowerCase();
+        result = result.filter(p => 
+          p.location.toLowerCase().includes(selLocLower) || 
+          selLocLower.includes(p.location.toLowerCase().split(',')[0].trim())
+        );
       }
     }
 
@@ -273,7 +297,7 @@ export default function Marketplace() {
     }
 
     return result;
-  }, [selectedCategories, priceMin, priceMax, location, condition, sortBy, searchQuery]);
+  }, [selectedCategories, priceMin, priceMax, selectedLocation, condition, sortBy, searchQuery]);
 
   // Sidebar / Drawer Filter Content helper
   const renderFilterContent = () => (
@@ -363,14 +387,20 @@ export default function Marketplace() {
       <div className="space-y-3 pt-4 border-t border-outline-variant/30">
         <h3 className="font-bold text-xs uppercase tracking-wider text-on-surface">Location</h3>
         <select
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
+          value={selectedLocation}
+          onChange={(e) => setSelectedLocation(e.target.value)}
           className="w-full bg-surface-container border border-outline-variant/20 rounded-xl py-2.5 px-3 text-sm text-on-surface font-semibold focus:outline-none cursor-pointer"
         >
           <option>All Locations</option>
           <option>North America</option>
           <option>Europe</option>
           <option>Asia</option>
+          {selectedLocation !== 'All Locations' && 
+           selectedLocation !== 'North America' && 
+           selectedLocation !== 'Europe' && 
+           selectedLocation !== 'Asia' && (
+            <option value={selectedLocation}>{selectedLocation}</option>
+          )}
         </select>
       </div>
 
@@ -395,8 +425,38 @@ export default function Marketplace() {
     </div>
   );
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <main className="max-w-[1400px] mx-auto py-0 sm:py-8 sm:px-6 md:px-12 flex flex-col lg:flex-row gap-8 w-full relative">
+    <div className="w-full">
+      {/* Search Bar (Sticky below Navbar) */}
+      <div className="bg-slate-50 border-b border-slate-200/60 py-2 sm:py-3.5 px-3 sm:px-6 md:px-12 sticky top-[64px] sm:top-[72px] z-30 backdrop-blur-md bg-opacity-95">
+        <div className="max-w-[1400px] mx-auto flex items-center justify-between w-full">
+          <form onSubmit={handleSearchSubmit} className="w-full flex items-stretch gap-1.5 sm:gap-2.5">
+            <div className="relative flex-grow">
+              <span className="material-symbols-outlined absolute left-2.5 sm:left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm sm:text-base">search</span>
+              <input 
+                type="text" 
+                placeholder='Search products...' 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full h-full pl-8 sm:pl-11 pr-3 sm:pr-4 py-2 sm:py-3 bg-white border border-[#1D352E]/10 sm:border-2 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-semibold focus:border-[#1D352E] hover:border-[#1D352E]/30 transition-all outline-none"
+              />
+            </div>
+            <button 
+              type="submit"
+              className="bg-[#1D352E] hover:bg-[#1D352E]/95 text-white px-3 sm:px-7 rounded-lg sm:rounded-xl font-bold text-[10px] sm:text-xs flex items-center justify-center gap-1 shadow-sm transition-all active:scale-95 cursor-pointer"
+            >
+              <span className="material-symbols-outlined text-sm sm:text-base">search</span>
+              <span className="hidden sm:inline">Search</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <main className="max-w-[1400px] mx-auto py-0 sm:py-8 sm:px-6 md:px-12 flex flex-col lg:flex-row gap-8 w-full relative">
 
       {/* Desktop Sidebar (visible on large screen) */}
       <aside className="hidden lg:block lg:w-64 shrink-0 bg-white p-6 rounded-2xl border border-outline-variant/30 h-fit shadow-sm">
@@ -413,56 +473,33 @@ export default function Marketplace() {
       </aside>
 
       {/* Mobile Sort & Filter Bar (Flipkart Style) */}
-      <div className="flex sm:hidden border-b border-outline-variant/20 bg-white sticky top-[56px] z-30 shadow-sm w-full divide-x divide-outline-variant/20">
+      <div className="flex sm:hidden border-b border-outline-variant/20 bg-white sticky top-[110px] z-30 shadow-sm w-full divide-x divide-outline-variant/20">
         <button
           onClick={cycleSortMobile}
-          className="flex-1 py-3.5 flex items-center justify-center gap-2 font-bold text-sm text-on-surface hover:bg-slate-50 cursor-pointer active:bg-slate-100 transition-colors"
+          className="flex-1 py-2.5 flex items-center justify-center gap-1.5 font-bold text-xs text-on-surface hover:bg-slate-50 cursor-pointer active:bg-slate-100 transition-colors"
         >
-          <svg className="w-4.5 h-4.5 text-on-surface-variant" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 text-on-surface-variant" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
           </svg>
-          Sort ({sortBy.replace('Price: ', '')})
+          Sort: {sortBy === 'Newest Arrivals' ? 'Newest' : sortBy === 'Price: Low to High' ? 'Low-High' : 'High-Low'}
         </button>
         <button
           onClick={() => setIsMobileFilterOpen(true)}
-          className="flex-1 py-3.5 flex items-center justify-center gap-2 font-bold text-sm text-on-surface hover:bg-slate-50 cursor-pointer active:bg-slate-100 transition-colors"
+          className="flex-1 py-2.5 flex items-center justify-center gap-1.5 font-bold text-xs text-on-surface hover:bg-slate-50 cursor-pointer active:bg-slate-100 transition-colors"
         >
-          <svg className="w-4.5 h-4.5 text-on-surface-variant" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 text-on-surface-variant" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
           </svg>
           Filter
-          {selectedCategories.length + (condition !== 'All' ? 1 : 0) + (location !== 'All Locations' ? 1 : 0) > 0 && (
-            <span className="bg-primary text-white text-[10px] w-4.5 h-4.5 rounded-full flex items-center justify-center font-bold">
-              {selectedCategories.length + (condition !== 'All' ? 1 : 0) + (location !== 'All Locations' ? 1 : 0)}
+          {selectedCategories.length + (condition !== 'All' ? 1 : 0) + (selectedLocation !== 'All Locations' ? 1 : 0) > 0 && (
+            <span className="bg-primary text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+              {selectedCategories.length + (condition !== 'All' ? 1 : 0) + (selectedLocation !== 'All Locations' ? 1 : 0)}
             </span>
           )}
         </button>
       </div>
 
-      {/* Mobile Horizontal Quick Filters (Flipkart Style) */}
-      <div className="flex sm:hidden overflow-x-auto gap-2.5 py-2.5 px-4 bg-white border-b border-outline-variant/15 scrollbar-none sticky top-[108px] z-20 shadow-sm w-full">
-        <button
-          onClick={() => setCondition(condition === 'New' ? 'All' : 'New')}
-          className={`px-3.5 py-1.5 rounded-lg border text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${condition === 'New' ? 'border-primary bg-primary/5 text-primary' : 'border-outline-variant/30 bg-white text-on-surface-variant'
-            }`}
-        >
-          Condition: New
-        </button>
-        <button
-          onClick={() => setPriceMax(priceMax === 500 ? 2500 : 500)}
-          className={`px-3.5 py-1.5 rounded-lg border text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${priceMax === 500 ? 'border-primary bg-primary/5 text-primary' : 'border-outline-variant/30 bg-white text-on-surface-variant'
-            }`}
-        >
-          Under $500
-        </button>
-        <button
-          onClick={() => setLocation(location === 'North America' ? 'All Locations' : 'North America')}
-          className={`px-3.5 py-1.5 rounded-lg border text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${location === 'North America' ? 'border-primary bg-primary/5 text-primary' : 'border-outline-variant/30 bg-white text-on-surface-variant'
-            }`}
-        >
-          North America
-        </button>
-      </div>
+
 
       {/* Mobile Filter Slide-Over Drawer */}
       {isMobileFilterOpen && (
@@ -508,7 +545,7 @@ export default function Marketplace() {
       )}
 
       {/* Product List Area */}
-      <section className="flex-grow px-0 sm:px-0">
+      <section className="flex-grow px-4 sm:px-0">
         {/* Desktop / Tablet Header */}
         <div className="hidden sm:flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
           <div>
@@ -528,9 +565,9 @@ export default function Marketplace() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
               </svg>
               Filters
-              {selectedCategories.length + (condition !== 'All' ? 1 : 0) + (location !== 'All Locations' ? 1 : 0) > 0 && (
+              {selectedCategories.length + (condition !== 'All' ? 1 : 0) + (selectedLocation !== 'All Locations' ? 1 : 0) > 0 && (
                 <span className="bg-primary text-white text-[10px] w-4.5 h-4.5 rounded-full flex items-center justify-center font-bold">
-                  {selectedCategories.length + (condition !== 'All' ? 1 : 0) + (location !== 'All Locations' ? 1 : 0)}
+                  {selectedCategories.length + (condition !== 'All' ? 1 : 0) + (selectedLocation !== 'All Locations' ? 1 : 0)}
                 </span>
               )}
             </button>
@@ -613,17 +650,9 @@ export default function Marketplace() {
 
                   {/* Product Details */}
                   <div className="p-3 sm:p-5">
-                    {/* Price and Discount Row */}
+                    {/* Price Row */}
                     <div className="flex flex-wrap items-baseline gap-1.5 mb-1">
                       <span className="text-sm sm:text-lg font-bold text-primary">${item.price}</span>
-                      {item.originalPrice && (
-                        <span className="text-on-surface-variant line-through text-[10px] sm:text-xs font-semibold">${item.originalPrice}</span>
-                      )}
-                      {item.discount && (
-                        <span className="text-emerald-600 font-bold text-[10px] sm:text-xs">
-                          {item.discount}% Off
-                        </span>
-                      )}
                     </div>
 
                     {/* Title */}
@@ -665,23 +694,7 @@ export default function Marketplace() {
                   </div>
                 </div>
 
-                {/* Shipping & Condition Badges */}
-                {(item.shipping || item.condition) && (
-                  <div className="px-3 pb-3 sm:px-5 sm:pb-5 pt-0">
-                    <div className="pt-2 sm:pt-3 border-t border-outline-variant/30 flex gap-2 flex-wrap">
-                      {item.shipping && (
-                        <span className="bg-emerald-50 text-emerald-800 text-[9px] sm:text-[10px] font-bold uppercase tracking-tight px-2 py-0.5 rounded border border-emerald-100">
-                          {item.shipping}
-                        </span>
-                      )}
-                      {item.condition && (
-                        <span className="bg-surface-container text-on-surface-variant text-[9px] sm:text-[10px] font-bold uppercase tracking-tight px-2 py-0.5 rounded">
-                          {item.condition}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                )}
+
               </Link>
             ))}
           </div>
@@ -694,5 +707,6 @@ export default function Marketplace() {
         </div>
       </section>
     </main>
+    </div>
   );
 }

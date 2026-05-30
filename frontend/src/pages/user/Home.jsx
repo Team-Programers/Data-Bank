@@ -667,84 +667,84 @@ export default function Home() {
       </section>
 
       {/* Vendor Banner */}
-      <section className="max-w-[1400px] mx-auto px-6 md:px-12 py-16">
-        <div className="bg-primary rounded-3xl p-12 md:p-20 text-center relative overflow-hidden shadow-2xl">
+      <section className="max-w-[1400px] mx-auto px-6 md:px-12 py-10 sm:py-16">
+        <div className="bg-primary rounded-3xl px-6 py-10 sm:p-12 md:p-20 text-center relative overflow-hidden shadow-2xl">
           <div className="relative z-10 max-w-3xl mx-auto text-white">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
               Become a Vendor Today
             </h2>
-            <p className="text-lg text-white/80 mb-10 font-medium">
+            <p className="text-sm sm:text-lg text-white/80 mb-6 sm:mb-10 font-medium max-w-2xl mx-auto leading-relaxed">
               Join our curated community of elite creators. Reach professional buyers worldwide and keep up to 85% of your sales.
             </p>
             <Link 
               to="/sell-product" 
-              className="inline-block bg-white text-primary px-10 py-4 rounded-full font-bold shadow-xl hover:bg-surface-bright transition-all transform active:scale-95 cursor-pointer"
+              className="inline-block bg-white text-primary px-6 py-3 sm:px-10 sm:py-4 rounded-full font-bold text-xs sm:text-base shadow-xl hover:bg-surface-bright transition-all transform active:scale-95 cursor-pointer"
             >
               Start Selling
             </Link>
           </div>
           {/* Abstract decorative backgrounds */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-400/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-indigo-400/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 bg-black/10 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"></div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 px-6 md:px-12 max-w-4xl mx-auto bg-background">
-        <h2 className="text-3xl font-bold mb-12 text-center text-on-surface">Frequently Asked Questions</h2>
+      <section className="py-10 sm:py-20 px-4 sm:px-6 md:px-12 max-w-4xl mx-auto bg-background">
+        <h2 className="text-xl sm:text-3xl font-bold mb-6 sm:mb-12 text-center text-on-surface">Frequently Asked Questions</h2>
         <div className="space-y-4">
           <details className="group bg-white rounded-2xl border border-outline-variant/50 shadow-sm overflow-hidden" open>
-            <summary className="flex justify-between items-center font-bold cursor-pointer p-6 text-on-surface hover:bg-surface-container-lowest transition-colors list-none">
-              <span className="text-lg">How do I start selling on MarketElite?</span>
-              <span className="transition-transform duration-300 group-open:rotate-180 text-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+            <summary className="flex justify-between items-center font-bold cursor-pointer p-4 sm:p-6 text-on-surface hover:bg-surface-container-lowest transition-colors list-none">
+              <span className="text-sm sm:text-lg">How do I start selling on MarketElite?</span>
+              <span className="transition-transform duration-300 group-open:rotate-180 text-primary shrink-0 ml-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
               </span>
             </summary>
-            <div className="text-on-surface-variant px-6 pb-6 pt-2 text-base leading-relaxed font-medium">
+            <div className="text-on-surface-variant px-4 pb-4 sm:px-6 sm:pb-6 pt-1 sm:pt-2 text-xs sm:text-base leading-relaxed font-medium">
               Simply click the 'Start Selling' button or the 'Sell' link in the navigation to create your vendor account and begin listing your items.
             </div>
           </details>
 
           <details className="group bg-white rounded-2xl border border-outline-variant/50 shadow-sm overflow-hidden">
-            <summary className="flex justify-between items-center font-bold cursor-pointer p-6 text-on-surface hover:bg-surface-container-lowest transition-colors list-none">
-              <span className="text-lg">Are transactions on the platform secure?</span>
-              <span className="transition-transform duration-300 group-open:rotate-180 text-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+            <summary className="flex justify-between items-center font-bold cursor-pointer p-4 sm:p-6 text-on-surface hover:bg-surface-container-lowest transition-colors list-none">
+              <span className="text-sm sm:text-lg">Are transactions on the platform secure?</span>
+              <span className="transition-transform duration-300 group-open:rotate-180 text-primary shrink-0 ml-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
               </span>
             </summary>
-            <div className="text-on-surface-variant px-6 pb-6 pt-2 text-base leading-relaxed font-medium">
+            <div className="text-on-surface-variant px-4 pb-4 sm:px-6 sm:pb-6 pt-1 sm:pt-2 text-xs sm:text-base leading-relaxed font-medium">
               Yes, all transactions are protected by our end-to-end encryption and secure payment gateway. We also offer buyer protection for all verified purchases.
             </div>
           </details>
 
           <details className="group bg-white rounded-2xl border border-outline-variant/50 shadow-sm overflow-hidden">
-            <summary className="flex justify-between items-center font-bold cursor-pointer p-6 text-on-surface hover:bg-surface-container-lowest transition-colors list-none">
-              <span className="text-lg">What are the shipping options available?</span>
-              <span className="transition-transform duration-300 group-open:rotate-180 text-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+            <summary className="flex justify-between items-center font-bold cursor-pointer p-4 sm:p-6 text-on-surface hover:bg-surface-container-lowest transition-colors list-none">
+              <span className="text-sm sm:text-lg">What are the shipping options available?</span>
+              <span className="transition-transform duration-300 group-open:rotate-180 text-primary shrink-0 ml-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
               </span>
             </summary>
-            <div className="text-on-surface-variant px-6 pb-6 pt-2 text-base leading-relaxed font-medium">
+            <div className="text-on-surface-variant px-4 pb-4 sm:px-6 sm:pb-6 pt-1 sm:pt-2 text-xs sm:text-base leading-relaxed font-medium">
               Sellers can choose between standard, express, and international shipping options. Many of our 'Top Rated' items feature free shipping.
             </div>
           </details>
 
           <details className="group bg-white rounded-2xl border border-outline-variant/50 shadow-sm overflow-hidden">
-            <summary className="flex justify-between items-center font-bold cursor-pointer p-6 text-on-surface hover:bg-surface-container-lowest transition-colors list-none">
-              <span className="text-lg">How does the verification process work?</span>
-              <span className="transition-transform duration-300 group-open:rotate-180 text-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+            <summary className="flex justify-between items-center font-bold cursor-pointer p-4 sm:p-6 text-on-surface hover:bg-surface-container-lowest transition-colors list-none">
+              <span className="text-sm sm:text-lg">How does the verification process work?</span>
+              <span className="transition-transform duration-300 group-open:rotate-180 text-primary shrink-0 ml-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
               </span>
             </summary>
-            <div className="text-on-surface-variant px-6 pb-6 pt-2 text-base leading-relaxed font-medium">
+            <div className="text-on-surface-variant px-4 pb-4 sm:px-6 sm:pb-6 pt-1 sm:pt-2 text-xs sm:text-base leading-relaxed font-medium">
               Every seller undergoes a rigorous identity and authenticity check to ensure our community maintains the highest standards of trust and quality.
             </div>
           </details>
