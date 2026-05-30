@@ -14,6 +14,7 @@ import ApproveListings from './pages/admin/ApproveListings';
 import ManageCategories from './pages/admin/ManageCategories';
 import ManageProducts from './pages/admin/ManageProducts';
 import ManageUsers from './pages/admin/ManageUsers';
+import { Otp } from './pages/user/otp';
 
 const HowItWorks = () => <div className="p-20 text-center text-2xl font-bold text-on-surface bg-background">How It Works Page Coming Soon</div>;
 
@@ -37,6 +38,7 @@ function App() {
       <Route path="/admin/products" element={<ManageProducts />} />
       <Route path="/admin/users" element={<ManageUsers />} />
       <Route path="*" element={<UserLayout><Home /></UserLayout>} />
+      <Route path='/otp' element={<Otp/>}/>
       </Routes>
     </>
   );
