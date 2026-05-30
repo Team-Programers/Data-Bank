@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,52 +61,67 @@ export default function Navbar() {
         <div className="flex items-center md:hidden">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="text-slate-600 hover:text-black transition-colors duration-200 focus:outline-none cursor-pointer"
+            className="text-slate-600 hover:text-black transition-colors duration-200 focus:outline-none cursor-pointer flex items-center justify-center w-8 h-8"
             aria-label="Toggle menu"
           >
-            {isOpen ? (
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-              </svg>
-            )}
+            <motion.div
+              key={isOpen ? 'close' : 'open'}
+              initial={{ rotate: isOpen ? -45 : 45, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              {isOpen ? (
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+              )}
+            </motion.div>
           </button>
         </div>
       </div>
 
       {/* Mobile Drawer (Drop-down Menu) */}
-      {isOpen && (
-        <div className="absolute top-full left-0 right-0 bg-white border-b border-slate-100 px-6 py-6 flex flex-col space-y-6 md:hidden shadow-xl transition-all duration-300 ease-in-out z-40">
-          <nav className="flex flex-col space-y-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                onClick={() => setIsOpen(false)}
-                className={`text-base font-semibold transition-colors duration-200 ${
-                  isActive(link.path)
-                    ? 'text-black'
-                    : 'text-slate-600 hover:text-black'
-                }`}
-              >
-                {link.name}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0, y: -12 }}
+            animate={{ opacity: 1, height: 'auto', y: 0 }}
+            exit={{ opacity: 0, height: 0, y: -12 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute top-full left-0 right-0 bg-white border-b border-slate-100 px-6 pb-6 pt-4 flex flex-col space-y-6 md:hidden shadow-xl z-40 overflow-hidden"
+          >
+            <nav className="flex flex-col space-y-4">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setIsOpen(false)}
+                  className={`text-base font-semibold transition-colors duration-200 ${
+                    isActive(link.path)
+                      ? 'text-black'
+                      : 'text-slate-600 hover:text-black'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
+            
+            <div className="border-t border-slate-100 pt-4 flex flex-col space-y-4">
+              <Link to="/login" onClick={() => setIsOpen(false)} className="text-center font-semibold text-slate-600 hover:text-black py-2 cursor-pointer">
+                Log in
               </Link>
-            ))}
-          </nav>
-          
-          <div className="border-t border-slate-100 pt-4 flex flex-col space-y-4">
-            <Link to="/login" onClick={() => setIsOpen(false)} className="text-center font-semibold text-slate-600 hover:text-black py-2 cursor-pointer">
-              Log in
-            </Link>
-            <Link to="/sell-product" onClick={() => setIsOpen(false)} className="bg-primary hover:bg-on-primary-fixed-variant text-white text-center font-semibold py-2.5 px-6 rounded-full transition-all duration-200 shadow-sm cursor-pointer active:scale-95">
-              Get started
-            </Link>
-          </div>
-        </div>
-      )}
+              <Link to="/sell-product" onClick={() => setIsOpen(false)} className="bg-primary hover:bg-on-primary-fixed-variant text-white text-center font-semibold py-2.5 px-6 rounded-full transition-all duration-200 shadow-sm cursor-pointer active:scale-95">
+                Get started
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

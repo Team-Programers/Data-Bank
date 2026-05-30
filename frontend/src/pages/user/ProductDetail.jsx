@@ -1,4 +1,18 @@
 import React, { useState, useRef } from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+
+// Fix leaflet marker icon issue in React
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+let DefaultIcon = L.icon({
+    iconUrl: icon,
+    shadowUrl: iconShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41]
+});
+L.Marker.prototype.options.icon = DefaultIcon;
 
 export default function ProductDetail() {
   // Images from the design spec
@@ -76,6 +90,8 @@ export default function ProductDetail() {
       image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCcAHt6nZiNU950dqLT2X8eVAvpLcbIpb3elGS7PDaD0hAmVtM7ESwYx8aBTV3nnd5J0bWNkuKHwiVh3Ff0cGGLx87TJAXray5LcZwsKR8DbS-dSLEYYkYP7BlBZ57HI_eYo6eg0tdcxTrd2TYcnHJH5BqF-VUg2FB_DtDNc37BUjDFaD7RKosqOaJmFbOQWwyGwj9bpMIkiyHPBERs8IDjW8Ix36LJaN67jE2HXxlui90r1hvcMeXdmCd2EkambpzyGm6hLlwFmyc'
     }
   ];
+
+  const storePosition = [40.7128, -74.0060]; // Store coordinates (New York)
 
   return (
     <main className="max-w-[1280px] mx-auto w-full px-4 sm:px-6 lg:px-16 py-6 sm:py-12 pb-24 sm:pb-16 bg-background">
@@ -173,6 +189,20 @@ export default function ProductDetail() {
               </div>
             </div>
 
+            {/* Seller details card (Moved under title) */}
+            <div className="bg-white rounded-xl p-3 sm:p-4 border border-outline-variant/30 flex items-center gap-2.5 sm:gap-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-surface-container overflow-hidden flex-shrink-0 border border-outline-variant/20 p-0.5 sm:p-1 flex items-center justify-center">
+                <img alt={product.seller.name} className="max-h-full max-w-full object-contain" src={product.seller.logo} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h4 className="font-extrabold text-xs sm:text-sm text-on-surface leading-tight truncate">{product.seller.name}</h4>
+                <p className="text-[10px] sm:text-[11px] font-semibold text-on-surface-variant/80 line-clamp-1 sm:line-clamp-none">{product.seller.description}</p>
+              </div>
+              <button className="text-primary font-bold text-[11px] sm:text-xs hover:underline cursor-pointer whitespace-nowrap px-1 flex-shrink-0">
+                View Store
+              </button>
+            </div>
+
             {/* Pricing Section (Flipkart style: Discount + Orig price + large price) */}
             <div className="bg-surface-container-lowest p-5 rounded-2xl border border-outline-variant/30">
               <div className="flex items-baseline gap-3 flex-wrap">
@@ -234,50 +264,62 @@ export default function ProductDetail() {
             </div>
           </div>
 
-          {/* Seller details card */}
-          <div className="bg-white rounded-2xl p-5 border border-outline-variant/30 flex items-start gap-4 mt-6">
-            <div className="w-12 h-12 rounded-xl bg-surface-container overflow-hidden flex-shrink-0 border border-outline-variant/20 p-1 flex items-center justify-center">
-              <img alt={product.seller.name} className="max-h-full max-w-full object-contain" src={product.seller.logo} />
-            </div>
-            <div>
-              <h4 className="font-extrabold text-sm text-on-surface">{product.seller.name}</h4>
-              <p className="text-xs font-semibold text-on-surface-variant/80 mt-0.5">{product.seller.description}</p>
-              <button className="mt-2 text-primary font-bold text-xs hover:underline cursor-pointer">
-                View Store
-              </button>
-            </div>
-          </div>
+
         </div>
 
       </div>
 
-      {/* Specifications Section */}
-      <div className="mb-16">
-        <h2 className="text-xl sm:text-2xl font-black text-on-surface mb-6">Specifications</h2>
-        <div className="bg-white rounded-2xl p-6 border border-outline-variant/30 shadow-sm">
-          <div className="text-sm font-semibold text-on-surface-variant divide-y divide-outline-variant/20">
-            <div className="grid grid-cols-3 py-3">
-              <span className="font-extrabold text-on-surface">Process Size</span>
-              <span className="col-span-2">3nm silicon process</span>
-            </div>
-            <div className="grid grid-cols-3 py-3">
-              <span className="font-extrabold text-on-surface">Cores / Threads</span>
-              <span className="col-span-2">{selectedConfig.split(' ')[0]} Cores / 32 Threads</span>
-            </div>
-            <div className="grid grid-cols-3 py-3">
-              <span className="font-extrabold text-on-surface">Base Frequency</span>
-              <span className="col-span-2">4.2 GHz</span>
-            </div>
-            <div className="grid grid-cols-3 py-3">
-              <span className="font-extrabold text-on-surface">Max Boost</span>
-              <span className="col-span-2">5.8 GHz boost</span>
-            </div>
-            <div className="grid grid-cols-3 py-3">
-              <span className="font-extrabold text-on-surface">L3 Cache</span>
-              <span className="col-span-2">128 MB</span>
+      {/* Specs & Location Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
+        
+        {/* Specifications Section */}
+        <div>
+          <h2 className="text-lg sm:text-2xl font-black text-on-surface mb-4 sm:mb-6">Specifications</h2>
+          <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-outline-variant/30 shadow-sm h-full">
+            <div className="divide-y divide-outline-variant/20">
+              <div className="flex flex-col sm:grid sm:grid-cols-3 py-2.5 sm:py-3 gap-0.5 sm:gap-0">
+                <span className="text-[11px] sm:text-sm font-extrabold text-on-surface uppercase sm:normal-case tracking-wider sm:tracking-normal">Process Size</span>
+                <span className="text-xs sm:text-sm col-span-2 font-semibold text-on-surface-variant">3nm silicon process</span>
+              </div>
+              <div className="flex flex-col sm:grid sm:grid-cols-3 py-2.5 sm:py-3 gap-0.5 sm:gap-0">
+                <span className="text-[11px] sm:text-sm font-extrabold text-on-surface uppercase sm:normal-case tracking-wider sm:tracking-normal">Cores / Threads</span>
+                <span className="text-xs sm:text-sm col-span-2 font-semibold text-on-surface-variant">{selectedConfig.split(' ')[0]} Cores / 32 Threads</span>
+              </div>
+              <div className="flex flex-col sm:grid sm:grid-cols-3 py-2.5 sm:py-3 gap-0.5 sm:gap-0">
+                <span className="text-[11px] sm:text-sm font-extrabold text-on-surface uppercase sm:normal-case tracking-wider sm:tracking-normal">Base Frequency</span>
+                <span className="text-xs sm:text-sm col-span-2 font-semibold text-on-surface-variant">4.2 GHz</span>
+              </div>
+              <div className="flex flex-col sm:grid sm:grid-cols-3 py-2.5 sm:py-3 gap-0.5 sm:gap-0">
+                <span className="text-[11px] sm:text-sm font-extrabold text-on-surface uppercase sm:normal-case tracking-wider sm:tracking-normal">Max Boost</span>
+                <span className="text-xs sm:text-sm col-span-2 font-semibold text-on-surface-variant">5.8 GHz boost</span>
+              </div>
+              <div className="flex flex-col sm:grid sm:grid-cols-3 py-2.5 sm:py-3 gap-0.5 sm:gap-0">
+                <span className="text-[11px] sm:text-sm font-extrabold text-on-surface uppercase sm:normal-case tracking-wider sm:tracking-normal">L3 Cache</span>
+                <span className="text-xs sm:text-sm col-span-2 font-semibold text-on-surface-variant">128 MB</span>
+              </div>
             </div>
           </div>
         </div>
+
+        {/* Store Location Map */}
+        <div className="flex flex-col">
+          <h2 className="text-xl sm:text-2xl font-black text-on-surface mb-6">Store Location</h2>
+          <div className="bg-white rounded-2xl p-2 sm:p-4 border border-outline-variant/30 shadow-sm h-[300px] sm:flex-1 relative z-0 flex flex-col min-h-[300px]">
+            <MapContainer center={storePosition} zoom={13} scrollWheelZoom={false} className="w-full h-full rounded-xl z-0">
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <Marker position={storePosition}>
+                <Popup>
+                  <strong>{product.seller.name}</strong><br />
+                  Come visit us!
+                </Popup>
+              </Marker>
+            </MapContainer>
+          </div>
+        </div>
+
       </div>
 
       {/* Related Products Section */}

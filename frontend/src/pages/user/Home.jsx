@@ -54,6 +54,25 @@ const widgetVariants = {
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState('India');
+  const [locationDropdownOpen, setLocationDropdownOpen] = useState(false);
+  const [locationSearchQuery, setLocationSearchQuery] = useState('');
+
+  const locations = [
+    'Kerala',
+    'Tamil Nadu',
+    'Punjab',
+    'Maharashtra',
+    'Delhi',
+    'Karnataka',
+    'Gujarat',
+    'Uttar Pradesh'
+  ];
+
+  const handleUseCurrentLocation = () => {
+    setSelectedLocation('Mumbai, MH');
+    setLocationDropdownOpen(false);
+  };
 
   // Sample electronics data from original design
   const electronics = [
@@ -193,6 +212,99 @@ export default function Home() {
 
   return (
     <div className="w-full">
+      {/* Search & Location Bar (Sticky below Navbar) */}
+      <div className="bg-slate-50 border-b border-slate-200/60 py-2 sm:py-3.5 px-3 sm:px-6 md:px-12 sticky top-[72px] z-30 backdrop-blur-md bg-opacity-95">
+        <div className="max-w-[1400px] mx-auto flex items-center justify-between w-full">
+          <div className="flex gap-1.5 sm:gap-3 w-full items-stretch">
+            
+            {/* Location Selector */}
+            <div className="relative w-[38%] min-w-[100px] sm:w-72 flex-shrink-0">
+              <button 
+                onClick={() => setLocationDropdownOpen(!locationDropdownOpen)}
+                className="w-full flex items-center justify-between gap-0.5 sm:gap-2 px-1.5 sm:px-4 py-2 sm:py-3 bg-white border border-[#1D352E]/10 sm:border-2 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-bold text-on-surface text-left cursor-pointer transition-all focus:border-[#1D352E] hover:border-[#1D352E]/30"
+              >
+                <div className="flex items-center gap-1 sm:gap-2 truncate">
+                  <span className="material-symbols-outlined text-sm sm:text-base text-[#1D352E] hidden sm:inline">location_on</span>
+                  <span className="truncate">{selectedLocation}</span>
+                </div>
+                <span className="material-symbols-outlined text-xs sm:text-base transition-transform duration-200 flex-shrink-0">
+                  {locationDropdownOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}
+                </span>
+              </button>
+
+              {/* Location Dropdown Popover */}
+              {locationDropdownOpen && (
+                <>
+                  <div className="fixed inset-0 z-45" onClick={() => setLocationDropdownOpen(false)}></div>
+                  <div className="absolute top-full left-0 mt-2 bg-white rounded-xl sm:rounded-2xl shadow-xl border border-outline-variant/30 p-2 sm:p-3.5 z-50 w-[240px] sm:w-80 max-h-[280px] overflow-y-auto">
+                    {/* Location Local Filter Input */}
+                    <div className="relative mb-3">
+                      <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-xs sm:text-sm text-on-surface-variant">search</span>
+                      <input 
+                        type="text"
+                        placeholder="Search city..."
+                        value={locationSearchQuery}
+                        onChange={(e) => setLocationSearchQuery(e.target.value)}
+                        className="w-full pl-8 pr-3 py-2 bg-slate-50 border border-transparent rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-semibold focus:ring-1 focus:ring-[#1D352E] focus:bg-white outline-none"
+                      />
+                    </div>
+
+                    {/* Use Current Location Action */}
+                    <button 
+                      onClick={handleUseCurrentLocation}
+                      className="w-full flex items-center gap-2 px-2.5 py-2 hover:bg-slate-50 text-[#1D352E] rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-bold cursor-pointer transition-all border border-dashed border-[#1D352E]/30 mb-2.5 text-left animate-pulse"
+                    >
+                      <span className="material-symbols-outlined text-sm sm:text-base">my_location</span>
+                      <span>Use current location</span>
+                    </button>
+
+                    {/* Popular locations list */}
+                    <div>
+                      <h4 className="text-[9px] sm:text-[10px] uppercase font-bold text-on-surface-variant tracking-wider px-2 mb-1">Popular Locations</h4>
+                      <div className="space-y-0.5">
+                        {locations
+                          .filter(loc => loc.toLowerCase().includes(locationSearchQuery.toLowerCase()))
+                          .map((loc) => (
+                            <button
+                              key={loc}
+                              onClick={() => { setSelectedLocation(loc); setLocationDropdownOpen(false); }}
+                              className="w-full flex items-center gap-2 px-2 py-2 hover:bg-slate-50 text-[10px] sm:text-xs font-semibold text-on-surface rounded-lg sm:rounded-xl cursor-pointer transition-all text-left"
+                            >
+                              <span className="material-symbols-outlined text-sm text-on-surface-variant opacity-60">location_on</span>
+                              <span>{loc}</span>
+                            </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Search Input Bar */}
+            <form onSubmit={handleSearchSubmit} className="flex flex-1 items-stretch gap-1.5 sm:gap-2.5">
+              <div className="relative flex-grow">
+                <span className="material-symbols-outlined absolute left-2.5 sm:left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm sm:text-base">search</span>
+                <input 
+                  type="text" 
+                  placeholder='Search products...' 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full h-full pl-8 sm:pl-11 pr-3 sm:pr-4 py-2 sm:py-3 bg-white border border-[#1D352E]/10 sm:border-2 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-semibold focus:border-[#1D352E] hover:border-[#1D352E]/30 transition-all outline-none"
+                />
+              </div>
+              <button 
+                type="submit"
+                className="bg-[#1D352E] hover:bg-[#1D352E]/95 text-white px-3 sm:px-7 rounded-lg sm:rounded-xl font-bold text-[10px] sm:text-xs flex items-center justify-center gap-1 shadow-sm transition-all active:scale-95 cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-sm sm:text-base">search</span>
+                <span className="hidden sm:inline">Search</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
       {/* Hero Section */}
       <main className="max-w-[1400px] mx-auto pb-6 lg:pb-12">
         <motion.div 
@@ -555,84 +667,84 @@ export default function Home() {
       </section>
 
       {/* Vendor Banner */}
-      <section className="max-w-[1400px] mx-auto px-6 md:px-12 py-16">
-        <div className="bg-primary rounded-3xl p-12 md:p-20 text-center relative overflow-hidden shadow-2xl">
+      <section className="max-w-[1400px] mx-auto px-6 md:px-12 py-10 sm:py-16">
+        <div className="bg-primary rounded-3xl px-6 py-10 sm:p-12 md:p-20 text-center relative overflow-hidden shadow-2xl">
           <div className="relative z-10 max-w-3xl mx-auto text-white">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
               Become a Vendor Today
             </h2>
-            <p className="text-lg text-white/80 mb-10 font-medium">
+            <p className="text-sm sm:text-lg text-white/80 mb-6 sm:mb-10 font-medium max-w-2xl mx-auto leading-relaxed">
               Join our curated community of elite creators. Reach professional buyers worldwide and keep up to 85% of your sales.
             </p>
             <Link 
               to="/sell-product" 
-              className="inline-block bg-white text-primary px-10 py-4 rounded-full font-bold shadow-xl hover:bg-surface-bright transition-all transform active:scale-95 cursor-pointer"
+              className="inline-block bg-white text-primary px-6 py-3 sm:px-10 sm:py-4 rounded-full font-bold text-xs sm:text-base shadow-xl hover:bg-surface-bright transition-all transform active:scale-95 cursor-pointer"
             >
               Start Selling
             </Link>
           </div>
           {/* Abstract decorative backgrounds */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-400/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-indigo-400/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 bg-black/10 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"></div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 px-6 md:px-12 max-w-4xl mx-auto bg-background">
-        <h2 className="text-3xl font-bold mb-12 text-center text-on-surface">Frequently Asked Questions</h2>
+      <section className="py-10 sm:py-20 px-4 sm:px-6 md:px-12 max-w-4xl mx-auto bg-background">
+        <h2 className="text-xl sm:text-3xl font-bold mb-6 sm:mb-12 text-center text-on-surface">Frequently Asked Questions</h2>
         <div className="space-y-4">
           <details className="group bg-white rounded-2xl border border-outline-variant/50 shadow-sm overflow-hidden" open>
-            <summary className="flex justify-between items-center font-bold cursor-pointer p-6 text-on-surface hover:bg-surface-container-lowest transition-colors list-none">
-              <span className="text-lg">How do I start selling on MarketElite?</span>
-              <span className="transition-transform duration-300 group-open:rotate-180 text-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+            <summary className="flex justify-between items-center font-bold cursor-pointer p-4 sm:p-6 text-on-surface hover:bg-surface-container-lowest transition-colors list-none">
+              <span className="text-sm sm:text-lg">How do I start selling on MarketElite?</span>
+              <span className="transition-transform duration-300 group-open:rotate-180 text-primary shrink-0 ml-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
               </span>
             </summary>
-            <div className="text-on-surface-variant px-6 pb-6 pt-2 text-base leading-relaxed font-medium">
+            <div className="text-on-surface-variant px-4 pb-4 sm:px-6 sm:pb-6 pt-1 sm:pt-2 text-xs sm:text-base leading-relaxed font-medium">
               Simply click the 'Start Selling' button or the 'Sell' link in the navigation to create your vendor account and begin listing your items.
             </div>
           </details>
 
           <details className="group bg-white rounded-2xl border border-outline-variant/50 shadow-sm overflow-hidden">
-            <summary className="flex justify-between items-center font-bold cursor-pointer p-6 text-on-surface hover:bg-surface-container-lowest transition-colors list-none">
-              <span className="text-lg">Are transactions on the platform secure?</span>
-              <span className="transition-transform duration-300 group-open:rotate-180 text-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+            <summary className="flex justify-between items-center font-bold cursor-pointer p-4 sm:p-6 text-on-surface hover:bg-surface-container-lowest transition-colors list-none">
+              <span className="text-sm sm:text-lg">Are transactions on the platform secure?</span>
+              <span className="transition-transform duration-300 group-open:rotate-180 text-primary shrink-0 ml-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
               </span>
             </summary>
-            <div className="text-on-surface-variant px-6 pb-6 pt-2 text-base leading-relaxed font-medium">
+            <div className="text-on-surface-variant px-4 pb-4 sm:px-6 sm:pb-6 pt-1 sm:pt-2 text-xs sm:text-base leading-relaxed font-medium">
               Yes, all transactions are protected by our end-to-end encryption and secure payment gateway. We also offer buyer protection for all verified purchases.
             </div>
           </details>
 
           <details className="group bg-white rounded-2xl border border-outline-variant/50 shadow-sm overflow-hidden">
-            <summary className="flex justify-between items-center font-bold cursor-pointer p-6 text-on-surface hover:bg-surface-container-lowest transition-colors list-none">
-              <span className="text-lg">What are the shipping options available?</span>
-              <span className="transition-transform duration-300 group-open:rotate-180 text-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+            <summary className="flex justify-between items-center font-bold cursor-pointer p-4 sm:p-6 text-on-surface hover:bg-surface-container-lowest transition-colors list-none">
+              <span className="text-sm sm:text-lg">What are the shipping options available?</span>
+              <span className="transition-transform duration-300 group-open:rotate-180 text-primary shrink-0 ml-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
               </span>
             </summary>
-            <div className="text-on-surface-variant px-6 pb-6 pt-2 text-base leading-relaxed font-medium">
+            <div className="text-on-surface-variant px-4 pb-4 sm:px-6 sm:pb-6 pt-1 sm:pt-2 text-xs sm:text-base leading-relaxed font-medium">
               Sellers can choose between standard, express, and international shipping options. Many of our 'Top Rated' items feature free shipping.
             </div>
           </details>
 
           <details className="group bg-white rounded-2xl border border-outline-variant/50 shadow-sm overflow-hidden">
-            <summary className="flex justify-between items-center font-bold cursor-pointer p-6 text-on-surface hover:bg-surface-container-lowest transition-colors list-none">
-              <span className="text-lg">How does the verification process work?</span>
-              <span className="transition-transform duration-300 group-open:rotate-180 text-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+            <summary className="flex justify-between items-center font-bold cursor-pointer p-4 sm:p-6 text-on-surface hover:bg-surface-container-lowest transition-colors list-none">
+              <span className="text-sm sm:text-lg">How does the verification process work?</span>
+              <span className="transition-transform duration-300 group-open:rotate-180 text-primary shrink-0 ml-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
               </span>
             </summary>
-            <div className="text-on-surface-variant px-6 pb-6 pt-2 text-base leading-relaxed font-medium">
+            <div className="text-on-surface-variant px-4 pb-4 sm:px-6 sm:pb-6 pt-1 sm:pt-2 text-xs sm:text-base leading-relaxed font-medium">
               Every seller undergoes a rigorous identity and authenticity check to ensure our community maintains the highest standards of trust and quality.
             </div>
           </details>
