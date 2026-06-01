@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Laptop, Shirt, Home as HomeIcon, Trophy, Smartphone, Tv, ArrowRight } from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -197,13 +198,14 @@ export default function Home() {
 
   // Category list
   const categories = [
-    { name: 'Electronics', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBN25uuOAtyKRDVrXiSyJe0r4NmA-B2Hnn_2NMHuEedLjkXIJ4oPUNKClbWj9IKIPsUvd1hNxm7VtSKk_WQXdxswvJt4UCUHzqWOsEJIaqJBy9ZwwjpMlUAUcRfr77BZwQWTHvs-ju0IznpgkDq_Pv8vdriTPw7gMa1OJbUiyblWpm4NrlJzdfrTlpB8apLrvXUMauaNXN6SVF5Moah5kFzxZRSg7BSLAHQFkvuiZ-4qsFEXN8WqsmG7SFKrc0WpmGlt06ece6y3SY' },
-    { name: 'Fashion', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB2oL4kk1klUP2_yGPvMhRuaZ8sJXkvwua3kTEAeq7U9DR9Azkdv6qUa8qq_J5o9gTVbl0FFfg1EvJH67bUNTT_dR3rI-ATCocniaQbvy_NMrV3AkSnPzfZzsoBiSGyp2EC_z6ocv4wi58r0f2EFWsaSeKst2ZXgGJ6Vza4K0pvUVW221L3uqWl9PoZ1YPEwBWtAfNJU5BDPxmtZiH0xC2xqjEkdapPZTkmnyhorfYZWhHUG1nySfw0koAj_xRuApuL-waykQTaW8Y' },
-    { name: 'Home', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCA792-1NTpINYmu8rq260nE5yQQpqnwOYPo2woFQJvTiUtBpAQudkVQWitJjlXLaj-nO5cOpOidAmWTDpTilQlI0M8sKR0uDrwWVjSgl2bRCjaUybrUvxI-UdfNa-LCUlLfPR9tRTjGYCFUkeWUgrESVE86zFhy1XTx0Kdk-9m91UaBj-j34cPF73qxzHkqwSQVFtIQAbqh-Ta_jrOtBRjpTwHty5O4nIZfUwmMqvy-z4Iz_292DxdPx4SdzOHjVMpuYLKO4y7zH4' },
-    { name: 'Sports', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDmpcGkQIBvrh-9BGuKt48nov9HA8iorg1Ps0rDzRSN0kNM3uhKU8qC3W0RyeXRo4zFIzcmmUK3llXDTaXmqKoLubVsLVARYlohfcTH2Y5ykH9HAbyjkMXldtocULR4N3O3S899SmnBZu_GwUetISB2NmycUTm6aQKnGAICvBmcQYglQGdm4ouf_8Ni3PKkGUsIe0aT6uQ4JgUMacb5CBJMzjocmiSqAT8ykTDE16LZGVI27svNYxkeSy8s9L1lV2r6Hud7uMV4Pxk' },
-    { name: 'Mobiles', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCEdtgEJsDQqNLzpND1-91M9IZtU99JnQNvbxA-H0P1p9ACLYisDbqburjlRzxgLPAcoFQN9Pb-HFDC9kuVE9UoTr5bD47KyaolHx4q_eKNRPr7fvMvKixEF0nFTvRzJhyGMG7mIuaY3Cf8d6WreS2WHO5_kT1MlVpB57cKoisTKmwxlqBwDHWYhMisUD_1Rc6w8xXcB7mxMTXllmK0QFfSxfv_rsunXMYTwouRUjEfdLwGY5Llr6SxDG4vTvw7cnhk_SYjDwIfSOs' },
-    { name: 'Appliances', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCS8kDQ_9-uJfKlya5aJI6gpw0BlTaw-d_HgvHLVnhXot6ZbCFF4oZgw7azI3Eil26WdxGEyDsPkaZGizV7siffqZmuMew_uY3Mcm-amGsBDh6k2cuImSqBJm38SbWFpvaaQ8R12sqSJsGwGndjgISv4bHzMIRwkhtXCgfmfxN2NJlSZiLRg9m0dXAtSKDwOqyigqkF_5WfGu7gr83HLT798TgQ-_qEtOwiI4wHygnR-dhDq5K4cYfZdCbbHpk60GRU0Erbx34FRgE' },
+    { name: 'Electronics', icon: <Laptop size={18} />, image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1200&auto=format&fit=crop' },
+    { name: 'Fashion', icon: <Shirt size={18} />, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop' },
+    { name: 'Home', icon: <HomeIcon size={18} />, image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1200&auto=format&fit=crop' },
+    { name: 'Sports', icon: <Trophy size={18} />, image: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=1200&auto=format&fit=crop' },
+    { name: 'Mobiles', icon: <Smartphone size={18} />, image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1200&auto=format&fit=crop' },
+    { name: 'Appliances', icon: <Tv size={18} />, image: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1200&auto=format&fit=crop' },
   ];
+
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -639,27 +641,37 @@ export default function Home() {
       </div>
 
       {/* Explore Categories */}
-      <section className="py-16 px-6 md:px-12 max-w-[1400px] mx-auto bg-background border-t border-outline-variant/30">
-        <div className="flex justify-between items-end mb-10">
-          <h2 className="text-3xl font-bold text-on-surface">Explore Categories</h2>
-          <Link className="text-primary font-semibold flex items-center hover:underline text-sm gap-1" to="/categories">
-            View All Categories 
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-3 h-3">
-              <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-            </svg>
+      <section className="py-16 px-4 sm:px-6 md:px-12 max-w-[1400px] mx-auto bg-background border-t border-outline-variant/30">
+        <div className="flex justify-between items-end mb-8 sm:mb-10">
+          <div>
+            <h2 className="text-2xl sm:text-3.5xl font-bold text-on-surface tracking-tight">Explore Categories</h2>
+            <p className="text-on-surface-variant text-xs sm:text-sm font-medium mt-1">Discover curated premium collections</p>
+          </div>
+          <Link className="text-primary font-semibold flex items-center hover:underline text-xs sm:text-sm gap-1 hover:text-primary/80 transition-colors" to="/categories">
+            View All
+            <ArrowRight size={14} />
           </Link>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5 md:gap-6">
           {categories.map((cat) => (
             <Link 
               key={cat.name} 
-              className="relative h-36 sm:h-60 rounded-2xl overflow-hidden group shadow-sm block" 
+              className="relative h-40 sm:h-56 lg:h-72 rounded-2xl sm:rounded-3xl overflow-hidden group shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200/50 bg-slate-50 block cursor-pointer" 
               to={`/marketplace?category=${cat.name.toLowerCase()}`}
             >
-              <img alt={cat.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src={cat.image} />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex items-end p-4 sm:p-8">
-                <h3 className="text-white text-base sm:text-xl font-bold">{cat.name}</h3>
+              <img alt={cat.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" src={cat.image} />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/40 to-transparent transition-opacity duration-300 group-hover:opacity-90" />
+              
+              {/* Glassmorphic Category Info Card */}
+              <div className="absolute inset-x-2.5 bottom-2.5 sm:inset-x-3.5 sm:bottom-3.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-2 sm:p-2.5 flex items-center justify-between transition-all duration-300 group-hover:bg-[#1D352E] group-hover:border-transparent group-hover:shadow-lg">
+                <div className="flex items-center gap-1.5 sm:gap-2 truncate">
+                  <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-white/20 flex items-center justify-center text-white transition-colors group-hover:bg-white/10 flex-shrink-0">
+                    {cat.icon}
+                  </div>
+                  <span className="text-[10px] sm:text-xs font-bold text-white tracking-tight truncate">{cat.name}</span>
+                </div>
+                <ArrowRight size={12} className="text-white/80 transform translate-x-0.5 group-hover:translate-x-0 transition-transform duration-300 flex-shrink-0" />
               </div>
             </Link>
           ))}
