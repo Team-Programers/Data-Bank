@@ -604,18 +604,7 @@ export default function Marketplace() {
             {filteredProducts.map((item) => (
               <Link to={`/product/${item.id}`} key={item.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 group relative border border-outline-variant/30 flex flex-col justify-between cursor-pointer">
                 <div>
-                  {item.tag && (
-                    <div className={`absolute top-2 left-2 z-10 text-[8px] sm:text-[10px] uppercase tracking-wider font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded flex items-center gap-1 ${
-                      item.tag === 'BESTSELLER' || item.tag === 'Top Rated' ? 'bg-emerald-800 text-white' : 'bg-primary text-white'
-                    }`}>
-                      {(item.tag === 'BESTSELLER' || item.tag === 'Top Rated') && (
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-2.5 h-2.5 sm:w-3 sm:h-3">
-                          <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
-                        </svg>
-                      )}
-                      {item.tag}
-                    </div>
-                  )}
+
 
                   {/* Wishlist Button */}
                   <button
@@ -678,7 +667,6 @@ export default function Marketplace() {
                             <path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.787 1.4 8.168L12 18.896l-7.334 3.868 1.4-8.168L.132 9.21l8.2-1.192L12 .587z" />
                           </svg>
                         </div>
-                        <span className="text-[9px] sm:text-[10px] text-on-surface-variant font-semibold">({item.reviews.toLocaleString()})</span>
                         {item.isAssured && (
                           <span className="text-[8px] bg-blue-600 text-white font-extrabold px-1 rounded italic leading-none py-0.5">
                             Assured

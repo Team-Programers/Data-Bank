@@ -52,8 +52,13 @@ export default function Navbar() {
           <Link to="/login" className="text-sm font-semibold text-slate-600 hover:text-black px-4 py-2 transition-colors duration-200 cursor-pointer">
             Log in
           </Link>
-          <Link to="/sell-product" className="bg-primary text-white text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-on-primary-fixed-variant transition-all duration-200 shadow-sm cursor-pointer active:scale-95">
-            Get started
+          <Link to="/sell-product" className="p-[3px] rounded-full bg-gradient-to-tr from-yellow-400 via-teal-400 to-blue-600 shadow-md hover:shadow-lg transition-all duration-200 active:scale-95 inline-flex cursor-pointer">
+            <div className="bg-white rounded-full px-5 py-1.5 flex items-center justify-center gap-1.5 h-full w-full">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-4 h-4 text-slate-900">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+              <span className="text-[15px] font-bold text-blue-700 tracking-wide uppercase">Sell</span>
+            </div>
           </Link>
         </div>
 
@@ -115,8 +120,13 @@ export default function Navbar() {
               <Link to="/login" onClick={() => setIsOpen(false)} className="text-center font-semibold text-slate-600 hover:text-black py-2 cursor-pointer">
                 Log in
               </Link>
-              <Link to="/sell-product" onClick={() => setIsOpen(false)} className="bg-primary hover:bg-on-primary-fixed-variant text-white text-center font-semibold py-2.5 px-6 rounded-full transition-all duration-200 shadow-sm cursor-pointer active:scale-95">
-                Get started
+              <Link to="/sell-product" onClick={() => setIsOpen(false)} className="p-[3px] rounded-full bg-gradient-to-tr from-yellow-400 via-teal-400 to-blue-600 shadow-sm hover:shadow-md transition-all duration-200 active:scale-95 flex w-full">
+                <div className="bg-white rounded-full py-2.5 flex items-center justify-center gap-1.5 w-full">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5 text-slate-900">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                  </svg>
+                  <span className="text-base font-bold text-blue-700 tracking-wide uppercase">Sell</span>
+                </div>
               </Link>
             </div>
           </motion.div>
