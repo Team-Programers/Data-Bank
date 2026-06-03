@@ -35,7 +35,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 lg:grid-cols-6 gap-8 sm:gap-12 mb-10 sm:mb-20">
           <div className="col-span-2">
             <Link className="text-xl sm:text-2xl font-bold text-primary mb-3 sm:mb-6 block tracking-tight" to="/">
-              MarketElite
+              Data Bank
             </Link>
             <p className="text-on-surface-variant text-xs sm:text-sm font-medium leading-relaxed max-w-xs mb-4 sm:mb-8">
               The world's leading marketplace for high-end commerce. Discover verified luxury, tech, and collectibles from elite sellers globally.
